@@ -34,14 +34,18 @@ def main():
     """
     st.markdown(html_temp,unsafe_allow_html=True)
 
+    image = None
     image_file=st.file_uploader("Upload Image",type=['jpg','png','jpeg'])
     if image_file is not None:
         image=Image.open(image_file)
         st.text("original Image")
         st.image(image)
     if st.button("Recognise"):
-        result_img=detect_faces(image)
-        st.image(result_img)
+        if image is None:
+            st.warning('Upload an image first', icon="⚠️")
+        else:
+            result_img=detect_faces(image)
+            st.image(result_img)
 if __name__== '__main__':
     main()
 
